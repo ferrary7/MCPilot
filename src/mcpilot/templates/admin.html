@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCPilot Admin Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+            color: white;
+        }
+        
+        .header h1 {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .card h3 {
+            color: #4f46e5;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .status-indicator {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #10b981;
+        }
+        
+        .status-indicator.offline {
+            background: #ef4444;
+        }
+        
+        .api-section {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+        }
+        
+        .api-section h2 {
+            color: #4f46e5;
+            margin-bottom: 1.5rem;
+        }
+        
+        .endpoint {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.75rem;
+            margin: 0.5rem 0;
+            background: #f8fafc;
+            border-radius: 8px;
+            font-family: 'Monaco', 'Menlo', monospace;
+        }
+        
+        .method {
+            padding: 0.25rem 0.75rem;
+            border-radius: 4px;
+            font-size: 0.875rem;
+            font-weight: bold;
+            color: white;
+        }
+        
+        .method.get { background: #10b981; }
+        .method.post { background: #3b82f6; }
+        .method.put { background: #f59e0b; }
+        .method.delete { background: #ef4444; }
+        
+        .footer {
+            text-align: center;
+            color: white;
+            opacity: 0.8;
+            margin-top: 3rem;
+        }
+        
+        @media (max-width: 768px) {
+            .container { padding: 1rem; }
+            .header h1 { font-size: 2rem; }
+            .dashboard-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 MCPilot</h1>
+            <p>Model Context Protocol Gateway Dashboard</p>
+        </div>
+        
+        <div class="dashboard-grid">
+            <div class="card">
+                <h3>
+                    <span class="status-indicator" id="gateway-status"></span>
+                    Gateway Status
+                </h3>
+                <p id="gateway-info">Loading...</p>
+            </div>
+            
+            <div class="card">
+                <h3>
+                    <span class="status-indicator" id="servers-status"></span>
+                    MCP Servers
+                </h3>
+                <p id="servers-info">Loading...</p>
+            </div>
+            
+            <div class="card">
+                <h3>
+                    <span class="status-indicator"></span>
+                    Available Tools
+                </h3>
+                <p id="tools-info">Loading...</p>
+            </div>
+            
+            <div class="card">
+                <h3>
+                    <span class="status-indicator"></span>
+                    API Wrappers
+                </h3>
+                <p id="wrappers-info">Loading...</p>
+            </div>
+        </div>
+        
+        <div class="api-section">
+            <h2>📡 API Endpoints</h2>
+            
+            <h3 style="margin-top: 2rem; margin-bottom: 1rem; color: #6b7280;">Core MCP Operations</h3>
+            <div class="endpoint">
+                <span class="method get">GET</span>
+                <span>/api/v1/tools</span>
+                <span style="color: #6b7280;">- List all available tools</span>
+            </div>
+            <div class="endpoint">
+                <span class="method post">POST</span>
+                <span>/api/v1/tools/call</span>
+                <span style="color: #6b7280;">- Call a tool</span>
+            </div>
+            <div class="endpoint">
+                <span class="method get">GET</span>
+                <span>/api/v1/prompts</span>
+                <span style="color: #6b7280;">- List all available prompts</span>
+            </div>
+            <div class="endpoint">
+                <span class="method post">POST</span>
+                <span>/api/v1/prompts/get</span>
+                <span style="color: #6b7280;">- Get a prompt</span>
+            </div>
+            <div class="endpoint">
+                <span class="method get">GET</span>
+                <span>/api/v1/resources</span>
+                <span style="color: #6b7280;">- List all available resources</span>
+            </div>
+            
+            <h3 style="margin-top: 2rem; margin-bottom: 1rem; color: #6b7280;">Admin Operations</h3>
+            <div class="endpoint">
+                <span class="method get">GET</span>
+                <span>/admin/servers</span>
+                <span style="color: #6b7280;">- List MCP servers</span>
+            </div>
+            <div class="endpoint">
+                <span class="method post">POST</span>
+                <span>/admin/servers</span>
+                <span style="color: #6b7280;">- Add new MCP server</span>
+            </div>
+            <div class="endpoint">
+                <span class="method get">GET</span>
+                <span>/admin/metrics</span>
+                <span style="color: #6b7280;">- System metrics</span>
+            </div>
+            
+            <h3 style="margin-top: 2rem; margin-bottom: 1rem; color: #6b7280;">Documentation</h3>
+            <div class="endpoint">
+                <span class="method get">GET</span>
+                <span>/docs</span>
+                <span style="color: #6b7280;">- OpenAPI/Swagger UI</span>
+            </div>
+            <div class="endpoint">
+                <span class="method get">GET</span>
+                <span>/redoc</span>
+                <span style="color: #6b7280;">- ReDoc documentation</span>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>MCPilot v0.1.0 - FastAPI-based MCP Gateway</p>
+            <p>Visit <a href="/docs" style="color: #60a5fa;">/docs</a> for interactive API documentation</p>
+        </div>
+    </div>
+    
+    <script>
+        // Load dashboard data
+        async function loadDashboardData() {
+            try {
+                // Get status
+                const statusResponse = await fetch('/api/v1/status');
+                const status = await statusResponse.json();
+                
+                // Update gateway status
+                document.getElementById('gateway-info').textContent = 
+                    `Gateway: ${status.gateway} | Uptime: Active`;
+                    
+                // Update servers info
+                const serverCount = Object.keys(status.servers).length;
+                const connectedServers = Object.values(status.servers)
+                    .filter(s => s.status === 'connected').length;
+                    
+                document.getElementById('servers-info').textContent = 
+                    `${connectedServers}/${serverCount} servers connected`;
+                    
+                if (connectedServers === serverCount && serverCount > 0) {
+                    document.getElementById('servers-status').classList.remove('offline');
+                } else {
+                    document.getElementById('servers-status').classList.add('offline');
+                }
+                
+                // Get tools count
+                const toolsResponse = await fetch('/api/v1/tools');
+                const tools = await toolsResponse.json();
+                document.getElementById('tools-info').textContent = 
+                    `${tools.length} tools available`;
+                
+                // Get admin info (if available)
+                try {
+                    const adminResponse = await fetch('/admin/api-wrappers');
+                    const wrappers = await adminResponse.json();
+                    document.getElementById('wrappers-info').textContent = 
+                        `${wrappers.api_wrappers?.length || 0} API wrappers configured`;
+                } catch (e) {
+                    document.getElementById('wrappers-info').textContent = 
+                        'API wrappers info unavailable';
+                }
+                
+            } catch (error) {
+                console.error('Error loading dashboard data:', error);
+                document.getElementById('gateway-status').classList.add('offline');
+                document.getElementById('gateway-info').textContent = 'Error loading status';
+            }
+        }
+        
+        // Load data on page load
+        loadDashboardData();
+        
+        // Refresh every 30 seconds
+        setInterval(loadDashboardData, 30000);
+    </script>
+</body>
+</html>
