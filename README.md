@@ -7,7 +7,7 @@ A powerful, FastAPI-based gateway for the Model Context Protocol (MCP), designed
 MCPilot is now **fully functional** with the following working features:
 
 ### ✅ Working Features
-- **FastAPI Gateway Server** - Running on http://localhost:8000
+- **FastAPI Gateway Server** - Running on http://localhost:8000/docs
 - **Admin Dashboard** - Beautiful web UI at http://localhost:8000
 - **REST API Endpoints** - Full CRUD operations via /api/v1/*
 - **API Wrapper System** - Convert REST APIs to MCP tools (tested with JSONPlaceholder)
