@@ -2,6 +2,10 @@
 
 A powerful, FastAPI-based gateway for the Model Context Protocol (MCP), designed to unify and scale your AI toolchain.
 
+<a href="https://glama.ai/mcp/servers/@ferrary7/MCPilot">
+  <img width="380" height="200" src="https://glama.ai/mcp/servers/@ferrary7/MCPilot/badge" alt="MCPilot MCP server" />
+</a>
+
 ## ✅ Current Status
 
 MCPilot is now **fully functional** with the following working features:
